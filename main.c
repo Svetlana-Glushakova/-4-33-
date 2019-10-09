@@ -51,7 +51,7 @@ void perevod(int kolvo,int arr[])
 
 int main()
 {
-	char kolvo;
+	int kolvo;
 	int i=0,n=0;
 	int *arr,*arr_d;
 	printf("Enter the number of numbers\n");
