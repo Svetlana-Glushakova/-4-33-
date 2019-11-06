@@ -1,0 +1,69 @@
+#include <stdio.h>
+
+int main()
+{
+	int *arr,str,stl,i,j,edin,versh=0,t;
+	char f,k;
+	FILE *fl;
+	fl=fopen("tet.gv","w");
+	fputs("digraph test {\n",fl);
+	
+	printf("Enter \n");
+	scanf("%d",&str);
+	stl=str;
+	arr=(int*)malloc(str*stl*sizeof(int));
+	
+	for(i=0; i<str; i++)
+	{
+		f='A';
+		k='A';
+		f+=i;
+		t=0;
+		for(j=0; j<stl; j++)
+		{
+			printf("Enter %c->%c\n", f,k);
+			scanf("%d",(arr+i*stl+j));
+			edin=*(arr+i*stl+j);
+			if((f!=k && edin==1) || (*(arr+j*stl+i)==1 && f!=k))
+			{
+				t=1;
+			}
+			if(*(arr+i*stl+j)==1)
+			{
+				fprintf(fl,"%c->%c\n",f,k);
+		    }
+			k++;  
+			printf("t=%d\n", t); 
+	    }
+	    if(t==1)
+	    {
+	    	versh++;
+		}
+    }
+    if(versh==str)
+    {
+    	printf("SVYAZN\n\n");
+	}else
+	{
+		printf("NE SVYAZN\n\n");
+	}
+	
+	for(i=0; i<str; i++)
+	{
+		f='A';
+		k='A';
+		f+=i;
+		for(j=0; j<stl; j++)
+		{
+			printf("(%c->%c)= %d ",f,k,*(arr+i*stl+j));
+			if(j==stl-1)
+			{
+				printf("\n\n");
+			}
+			k++;
+		}
+	}
+	fputs("}",fl);
+	fclose(fl);
+	return 0;
+}
