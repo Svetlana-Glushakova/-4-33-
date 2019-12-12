@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <locale.h>
+
+void ShellSort (int array[], int size, char arr_b[])               
+{
+	int step,i,j,tmp;
+	char c;
+
+	for (step=size/2; step>0; step/=2)
+	{
+		for (i=step; i<size; i++)
+		{
+			for (j=i-step; j>=0 && array[j]<array[j + step]; j-=step)
+			{
+				tmp=array[j];
+				array[j]=array[j+step];
+				array[j+step]=tmp;
+				c=arr_b[j];
+				arr_b[j]=arr_b[j+step];
+				arr_b[j+step]=c;
+			}
+		} 
+	}
+	printf("\n");
+	
+	for(i=0; i<size; i++)
+	{
+		printf("%c", arr_b[i]);
+	}	
+}
+
+int main()
+{
+	setlocale(LC_ALL, "Rus");
+	
+	int *arr,str,stl,i,j;
+	int *arr_ch, kolv;
+	char f,k,*arr_b;
+	FILE *fl;
+	fl=fopen("tet.gv","w");
+	fputs("digraph test {\n",fl);
+	
+	printf("Enter \n");
+	scanf("%d",&str);
+	stl=str;
+	arr=(int*)malloc(str*stl*sizeof(int));
+	arr_ch=(int*)malloc(str*stl*sizeof(int));
+	arr_b=(char*)malloc(str*stl*sizeof(char));
+	
+	for(i=0; i<str; i++)
+	{
+		f='A';
+		k='A';
+		f+=i;
+		kolv=0;
+		for(j=0; j<stl; j++)
+		{
+			printf("Enter %c->%c\n", f,k);
+			scanf("%d", (arr+i*stl+j));
+			if(*(arr+i*stl+j)==1)
+			{
+				fprintf(fl,"%c->%c\n",f,k);
+				if (f==k)
+				{
+					kolv=kolv+2;
+				}else
+				{
+					kolv++;
+				}
+		    }
+			k++; 	
+	    }
+	    if(kolv==0)
+	    {
+	    	fprintf(fl,"%c\n",f);
+		}
+	    printf("\n%c=%d\n",f, kolv);
+	    arr_ch[i]=kolv;
+	    arr_b[i]=f;
+    }
+    
+    ShellSort(arr_ch,stl,arr_b);
+    printf("\n");
+    
+	for(i=0; i<str; i++)
+	{
+		f='A';
+		k='A';
+		f+=i;
+		for(j=0; j<stl; j++)
+		{
+			printf("(%c->%c)= %d ",f,k,*(arr+i*stl+j));
+			if(j==stl-1)
+			{
+				printf("\n\n");
+			}
+			k++;
+		}
+	}
+	fputs("}",fl);
+	fclose(fl);
+	return 0;
+}
