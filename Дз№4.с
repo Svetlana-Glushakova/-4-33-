@@ -60,16 +60,19 @@ int main()
 			if(*(arr+i*stl+j)==1)
 			{
 				fprintf(fl,"%c->%c\n",f,k);
-				if (f==k)
-				{
-					kolv=kolv+2;
-				}else
+		    }
+			if (f==k && *(arr+i*stl+j)==1)
+			{
+				kolv=kolv+2;
+			}else
+			{
+				if(*(arr+j*stl+i)==1 || *(arr+i*stl+j)==1)
 				{
 					kolv++;
 				}
-		    }
-			k++; 	
-	    }
+			}
+			k++;
+		}
 	    if(kolv==0)
 	    {
 	    	fprintf(fl,"%c\n",f);
@@ -77,7 +80,7 @@ int main()
 	    printf("\n%c=%d\n",f, kolv);
 	    arr_ch[i]=kolv;
 	    arr_b[i]=f;
-    }
+	}
     
     ShellSort(arr_ch,stl,arr_b);
     printf("\n");
